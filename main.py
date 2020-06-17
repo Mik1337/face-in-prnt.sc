@@ -1,4 +1,5 @@
 from utils import get_image_url, increment
+from urllib.error import HTTPError
 from skimage import io
 import numpy as np
 import sys
@@ -34,21 +35,20 @@ try:
             # If faces are found, write image (colour) to file
             if (len(faces) > 0):
                 cv2.imwrite(f'images/{im}.png', image)
- 
         except FileNotFoundError:
             print(f'{i}. no image found in {im}')
         finally:
             try:
                 # Print number of faces found
-                print (f'{i}. found {len(faces)} in {im}...')
+                print (f'{i}. found {len(faces)} faces in {im}...')
             except NameError:
                 pass
             im = increment(im)
             i += 1
 
-except KeyboardInterrupt:
+except (KeyboardInterrupt, HTTPError) as e:
     # Write current image to file, before exiting
     with open('currentImage.txt', 'w') as f:
         f.write(f'{im}')
-    print('Exiting...')
+    print(f'Exception {e} was encountered @ {im}\n Exiting...')
     sys.exit(0)

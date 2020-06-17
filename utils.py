@@ -6,7 +6,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleW
 def get_image_url(image_code):
     """ Returns image source """
     html = rq.get(f'https://prnt.sc/{image_code}', headers=headers).content
-    parsed_html = BeautifulSoup(html)
+    parsed_html = BeautifulSoup(html, features='lxml')
     img = parsed_html.body.find('img', attrs={'image-id':f'{image_code}'})
     try:
         return img["src"]
