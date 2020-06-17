@@ -1,5 +1,5 @@
+from utils import get_image_url, increment
 from skimage import io
-from getImages import get_image_url
 import numpy as np
 import sys
 import cv2
@@ -43,7 +43,7 @@ try:
                 print (f'{i}. found {len(faces)} in {im}...')
             except NameError:
                 pass
-            im = np.base_repr(int(im, 36) + 1, 36)
+            im = increment(im)
             i += 1
 
 except KeyboardInterrupt:
