@@ -2,6 +2,7 @@ from utils import get_image_url, increment
 from urllib.error import HTTPError
 from skimage import io
 import numpy as np
+import subprocess
 import sys
 import cv2
 
@@ -46,9 +47,18 @@ try:
             im = increment(im)
             i += 1
 
-except (KeyboardInterrupt, HTTPError) as e:
-    # Write current image to file, before exiting
+except HTTPError as e:
+    # Connection cock block
     with open('currentImage.txt', 'w') as f:
         f.write(f'{im}')
     print(f'Exception {e} was encountered @ {im}\n Exiting...')
+    subprocess.run('~/Desktop/python/face-in-prnt.sc/run.sh', shell=True)
+
+except KeyboardInterrupt:
+    print(f'User interuption @ {im}\n Exiting...')
+
+finally:
+    # Write current image to file, before exiting
+    with open('currentImage.txt', 'w') as f:
+        f.write(f'{im}')
     sys.exit(0)
