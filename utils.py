@@ -15,6 +15,7 @@ def get_image_url(image_code):
 
 
 def increment(st):
+    """ Algorithm from https://stackoverflow.com/a/20927036/13156017 """
     next_str = ""
     increment = '0'*(len(st)-1) + '1'
     index = len(st) -1
